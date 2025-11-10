@@ -6,6 +6,33 @@ PROCESS_NAME="openldap-fusiondirectory"
 
 FUSIONDIRECTORY_INSTALLED="/etc/openldap/slapd.d/docker-openldap-fusiondirectory-was-installed"
 
+cat <<EOF
+
+*************************************************************************************************************************
+*                                                                                                                       *
+*                    END OF LIFE NOTICE AUGUST 18, 2025                                                                 *
+*                               tiredofit/openldap-fusiondirectory                                                      *
+*                                                                                                                       *
+* This image is no longer maintained as of and will not receive updates.                                                *
+*                                                                                                                       *
+* A successor image is available at:                                                                                    *
+*                                                                                                                       *
+* Repository | Documentation:                                                                                           *
+*   - https://github.com/nfrastack/container-openldap-fusiondirectory                                                   *
+*                                                                                                                       *
+* Image Registries:                                                                                                     *
+*   - https://hub.docker.com/r/nfrastack/openldap-fusiondirectory                                                       *
+*   - https://github.com/nfrastack/container-openldap-fusiondirectory/pkgs/container/container-openldap-fusiondirectory *
+*                                                                                                                       *
+* Please visit https://nfrastack.com for more information.                                                              *
+*                                                                                                                       *
+*************************************************************************************************************************
+
+EOF
+
+sleep 15
+
+
 if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ]; then
     print_warn "First time Fusion Directory install detected"
 
