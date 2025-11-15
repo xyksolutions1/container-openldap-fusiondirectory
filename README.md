@@ -1,20 +1,12 @@
-# github.com/tiredofit/docker-openldap-fusiondirectory
-
-[![GitHub release](https://img.shields.io/github/v/tag/tiredofit/docker-openldap-fusiondirectory?style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/tiredofit/docker-openldap-fusiondirectorymain.yml?branch=2.6-1.4&style=flat-square)](https://github.com/tiredofit/docker-openldap-fusiondirectory.git/actions)
-[![Docker Stars](https://img.shields.io/docker/stars/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/openldap-fusiondirectory.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory/)
-[![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
-[![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
-
+# nfrastack/container-openldap-fusiondirectory
 
 ## About
 
-This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory](https://www.fusiondirectory.org) Schema's Included. It includes all the functions in the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) such as Multi-Master Replication, TLS, and other features.
+This will build a container image for an [OpenLDAP Server](https://sourceforge.net/projects/openldap-fusiondirectory/) with [Fusion Directory](https://www.fusiondirectory.org) Schema's Included. It includes all the functions in the [OpenLDAP Image](https://github.com/nfrastack/container-openldap) such as Multi-Master Replication, TLS, and other features.
 
 ## Maintainer
 
-- [Dave Conroy](https://github.com/tiredofit/)
+- [Nfrastack](https://www.nfrastack.com)
 
 ## Table of Contents
 
@@ -22,195 +14,145 @@ This will build a Docker image for an [OpenLDAP Server](https://sourceforge.net/
 - [Maintainer](#maintainer)
 - [Table of Contents](#table-of-contents)
 - [Installation](#installation)
-  - [Build from Source](#build-from-source)
   - [Prebuilt Images](#prebuilt-images)
-  - [Multi Architecture](#multi-architecture)
-- [Configuration](#configuration)
   - [Quick Start](#quick-start)
   - [Persistent Storage](#persistent-storage)
-  - [Environment Variables](#environment-variables)
+- [Environment Variables](#environment-variables)
+  - [Base Images used](#base-images-used)
+  - [Core Configuration](#core-configuration)
 - [Schema Installation](#schema-installation)
-  - [Networking](#networking)
 - [Maintenance](#maintenance)
   - [Shell Access](#shell-access)
-- [Support](#support)
-  - [Usage](#usage)
-  - [Bugfixes](#bugfixes)
-  - [Feature Requests](#feature-requests)
-  - [Updates](#updates)
-- [License](#license)
+- [Support & Maintenance](#support--maintenance)
 - [References](#references)
-
-# Dependencies
-
-- To build this image you must have the [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) built and available. To utilize, you must also have the [Fusion Directory Image](https://github.com/tiredofit/docker-fusiondirectory) image built and available.
+- [License](#license)
 
 ## Installation
-### Build from Source
-Clone this repository and build the image with `docker build -t (imagename) .`
 
 ### Prebuilt Images
-Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/openldap-fusiondirectory)
 
-```bash
-docker pull docker.io/tiredofit/openldap-fusiondirectory:(imagetag)
-```
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-openldap-fusiondirectory/pkgs/container/docker-openldap-fusiondirectory)
+Feature limited builds of the image are available on the [Github Container Registry](https://github.com/nfrastack/container-openldap-fusiondirectory/pkgs/container/container-openldap-fusiondirectory) and [Docker Hub](https://hub.docker.com/r/nfrastack/openldap-fusiondirectory).
 
-```
-docker pull ghcr.io/tiredofit/docker-openldap-fusiondirectory:(imagetag)
-```
+To unlock advanced features, one must provide a code to be able to change specific environment variables from defaults. Support the development to gain access to a code.
 
-Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-tiredofdit/pkgs/container/docker-tiredofdit)
+To get access to the image use your container orchestrator to pull from the following locations:
 
 ```
-docker pull ghcr.io/tiredofit/docker-tiredofdit:(imagetag)
+ghcr.io/nfrastack/container-openldap-fusiondirectory:(image_tag)
+docker.io/nfrastack/openldap-fusiondirectory:(image_tag)
 ```
 
-The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
+Image tag syntax is:
 
-| Version | OpenLDAP Version | Container OS | Tag        |
-| ------- | ---------------- | ------------ | ---------- |
-| `1.4.x` | 2.6.x            | Alpine       | `:latest`  |
-| `1.4.x` | 2.6.x            | Alpine       | `:2.6-1.4` |
-| `1.4.x` | 2.4.x            | Alpine       | `:2.4-1.4` |
-| `1.3.x` | 2.4.x            | Alpine       | `:2.4-1.3` |
+`<image>:<optional tag>-<optional_distribution>_<optional_distribution_variant>`
 
-### Multi Architecture
-Images are built primarily for `amd64` architecture, and may also include builds for `arm/v6`, `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
+Example:
 
-## Configuration
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:latest` or
+
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:1.0` or optionally
+
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:1.0-alpine` or optinally
+
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:alpine`
+
+- `latest` will be the most recent commit
+- An optional `tag` may exist that matches the [CHANGELOG](CHANGELOG.md) - These are the safest
+- If it is built for multiple distributions there may exist a value of `alpine` or `debian`
+- If there are multiple distribution variations it may include a version - see the registry for availability
+
+Have a look at the container registries and see what tags are available.
+
+#### Multi-Architecture Support
+
+Images are built for `amd64` by default, with optional support for `arm64` and other architectures.
 
 ### Quick Start
 
-* The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [docker-compose.yml](examples/docker-compose.yml) that can be modified for development or production use.
+- The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [compose.yml](examples/compose.yml) that can be modified for your use.
 
-* Set various [environment variables](#environment-variables) to understand the capabilities of this image.
-* Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
-* Make [networking ports](#networking) available for public access if necessary
-__NOTE__: Please allow up to 2 minutes for the application to start for the first time if you are generating self signed TLS certificates.
+- Map [persistent storage](#persistent-storage) for access to configuration and data files for backup.
+- Set various [environment variables](#environment-variables) to understand the capabilities of this image.
 
 ### Persistent Storage
 
-* Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Data Volume Configuration.
+See the upstream [OpenLDAP Image](https://github.com/nfrastack/container-openldap) for this information.
 
-There is an additional data volume exposed:
-
-| Directory                         | Description                                                 |
-| --------------------------------- | ----------------------------------------------------------- |
-| `/assets/fusiondirectory-custom/` | Place Schema files here to be imported into FusionDirectory |
+| Directory | Description |
+| --------- | ----------- |
 
 ### Environment Variables
 
-This image relies on an [Alpine Linux](https://hub.docker.com/r/tiredofit/alpine) base image that relies on an [init system](https://github.com/just-containers/s6-overlay) for added capabilities. Outgoing SMTP capabilities are handlded via `msmtp`. Individual container performance monitoring is performed by [zabbix-agent](https://zabbix.org). Additional tools include: `bash`,`curl`,`less`,`logrotate`,`nano`.
+#### Base Images used
 
+This image relies on a customized base image in order to work.
 Be sure to view the following repositories to understand all the customizable options:
 
-| Image                                                     | Description                            |
-| --------------------------------------------------------- | -------------------------------------- |
-| [OS Base](https://github.com/tiredofit/docker-alpine/)    | Customized Image based on Alpine Linux |
-| [OpenLDAP](https://github.com/tiredofit/docker-openldap/) | OpenLDAP based on Alpine Linux         |
+| Image                                                        | Description         |
+| ------------------------------------------------------------ | ------------------- |
+| [OS Base](https://github.com/nfrastack/container-base/)      | Base Image          |
+| [OpenLDAP](https://github.com/nfrastack/container-openldap/) | OpenLDAP base image |
 
+Below is the complete list of available options that can be used to customize your installation.
 
-| Variable                     | Description               | Default                | `_FILE` |
-| ---------------------------- | ------------------------- | ---------------------- | ------- |
-| `FUSIONDIRECTORY_ADMIN_USER` | Default FD Admin User     | `admin`                | x       |
-| `FUSIONDIRECTORY_ADMIN_PASS` | Default FD Admin Password | `admin`                | x       |
-| `ORGANIZATION`               | Organization Name         | `Example Organization` |         |
+- Variables showing an 'x' under the `Advanced` column can only be set if the containers advanced functionality is enabled.
+
+#### Core Configuration
+
+| Parameter                    | Description               | Default                | Advanced |
+| ---------------------------- | ------------------------- | ---------------------- | -------- |
+| `FUSIONDIRECTORY_ADMIN_USER` | Default FD Admin User     | `fd-admin`             | x        |
+| `FUSIONDIRECTORY_ADMIN_PASS` | Default FD Admin Password | `admin`                | x        |
+| `ORGANIZATION`               | Organization Name         | `Example Organization` |          |
 
 ## Schema Installation
-Depending on your choices, the following schemas are available for installation. You must have these also enabled on the FusionDirectory application image to make use of it. If you would like to reapply the schemas set `REAPPLY_PLUGIN_SCHEMAS` to `TRUE`.
 
-| Variable                 | Description                              | Default |
-| ------------------------ | ---------------------------------------- | ------- |
-| `REAPPLY_PLUGIN_SCHEMAS` | Reapply Plugin Schemas `TRUE` or `FALSE` | `FALSE` |
-| `PLUGIN_ALIAS`           | Mail Aliases                             | `FALSE` |
-| `PLUGIN_APPLICATIONS`    | Applications                             | `FALSE` |
-| `PLUGIN_ARGONAUT`        | Argonaut                                 | `FALSE` |
-| `PLUGIN_AUDIT`           | Audit Trail                              | `TRUE`  |
-| `PLUGIN_AUTOFS`          | AutoFS                                   | `FALSE` |
-| `PLUGIN_CERTIFICATES`    | Manage Certificates                      | `FALSE` |
-| `PLUGIN_COMMUNITY`       | Community Plugin                         | `FALSE` |
-| `PLUGIN_CYRUS`           | Cyrus IMAP                               | `FALSE` |
-| `PLUGIN_DEBCONF`         | Argonaut Debconf                         | `FALSE` |
-| `PLUGIN_DEVELOPERS`      | Developers Plugin                        | `FALSE` |
-| `PLUGIN_DHCP`            | Manage DHCP                              | `FALSE` |
-| `PLUGIN_DNS`             | Manage DNS                               | `TRUE`  |
-| `PLUGIN_DOVECOT`         | Dovecot IMAP                             | `FALSE` |
-| `PLUGIN_DSA`             | System Accounts                          | `TRUE`  |
-| `PLUGIN_EJBCA`           | Unknown                                  | `FALSE` |
-| `PLUGIN_FAI`             | Unknown                                  | `FALSE` |
-| `PLUGIN_FREERADIUS`      | FreeRadius Management                    | `FALSE` |
-| `PLUGIN_FUSIONINVENTORY` | Inventory Plugin                         | `FALSE` |
-| `PLUGIN_GPG`             | Manage GPG Keys                          | `FALSE` |
-| `PLUGIN_IPMI`            | IPMI Management                          | `FALSE` |
-| `PLUGIN_KOPANO`          | Kopano                                   | `FALSE` |
-| `PLUGIN_MAIL`            | Mail Attributes                          | `TRUE`  |
-| `PLUGIN_MAILINBLACK`     | MailinBlack                              | `FALSE` |
-| `PLUGIN_MIXEDGROUPS`     | Unix/LDAP Groups                         | `FALSE` |
-| `PLUGIN_NAGIOS`          | Nagios Monitoring                        | `FALSE` |
-| `PLUGIN_NETGROUPS`       | NIS                                      | `FALSE` |
-| `PLUGIN_NEXTCLOUD`       | Nextcloud                                | `FALSE` |
-| `PLUGIN_NEWSLETTER`      | Manage Newsletters                       | `FALSE` |
-| `PLUGIN_OPSI`            | Inventory                                | `FALSE` |
-| `PLUGIN_PERSONAL`        | Personal Details                         | `TRUE`  |
-| `PLUGIN_POSIX`           | Posix Groups                             | `FALSE` |
-| `PLUGIN_POSTFIX`         | Postfix SMTP                             | `FALSE` |
-| `PLUGIN_PPOLICY`         | Password Policy                          | `TRUE`  |
-| `PLUGIN_PUPPET`          | Puppet CI                                | `FALSE` |
-| `PLUGIN_PUREFTPD`        | FTP Server                               | `FALSE` |
-| `PLUGIN_QUOTA`           | Manage Quotas                            | `FALSE` |
-| `PLUGIN_RENATER_PARTAGE` | Unknown                                  | `FALSE` |
-| `PLUGIN_REPOSITORY`      | Argonaut Deployment Registry             | `FALSE` |
-| `PLUGIN_SAMBA`           | File Sharing                             | `FALSE` |
-| `PLUGIN_SEAFILE`         | Seafile                                  | `FALSE` |
-| `PLUGIN_SOGO`            | Groupware                                | `FALSE` |
-| `PLUGIN_SPAMASSASSIN`    | Anti Spam                                | `FALSE` |
-| `PLUGIN_SQUID`           | Proxy                                    | `FALSE` |
-| `PLUGIN_SSH`             | Manage SSH Keys                          | `TRUE`  |
-| `PLUGIN_SUBCONTRACTING`  | Unknown                                  | `FALSE` |
-| `PLUGIN_SUDO`            | Manage SUDO on Hosts                     | `FALSE` |
-| `PLUGIN_SUPANN`          | SUPANN                                   | `FALSE` |
-| `PLUGIN_SYMPA`           | Sympa Mailing List                       | `FALSE` |
-| `PLUGIN_SYSTEMS`         | Systems Management                       | `TRUE`  |
-| `PLUGIN_USER_REMINDER`   | Password Expiry                          | `FALSE` |
-| `PLUGIN_WEBLINK`         | Display Weblink                          | `FALSE` |
+To install schemas into the LDAP directory, set the appropriate variables in this syntax:
 
+`PLUGIN_<pluginname>=TRUE`
 
-### Networking
+| Variable                             | Description                                                               | Default                           |
+| ------------------------------------ | ------------------------------------------------------------------------- | --------------------------------- |
+| `FUSIONDIRECTORY_SCHEMA_CUSTOM_PATH` | Store custom schemas that are not included in the image here to be loaded | `/custom/fusiondirectory/schema/` |
 
-* Please see [OpenLDAP Image](https://github.com/tiredofit/docker-openldap) for Networking Configuration
+Enter inside the container and type `plugin list` for available plugins.
+You must have the appropriate schemas installed before using the plugin within FusionDirectory.
+If you'd like to reapply the schemas on container startup change `TRUE` to `FORCE`
+
+Recommended Plugins:
+
+| Variable          | Description        | Value  |
+| ----------------- | ------------------ | ------ |
+| `PLUGIN_AUDIT`    | Audit Trail        | `TRUE` |
+| `PLUGIN_DNS`      | Manage DNS         | `TRUE` |
+| `PLUGIN_DSA`      | System Accounts    | `TRUE` |
+| `PLUGIN_MAIL`     | Mail Attributes    | `TRUE` |
+| `PLUGIN_PERSONAL` | Personal Details   | `TRUE` |
+| `PLUGIN_PPOLICY`  | Password Policy    | `TRUE` |
+| `PLUGIN_SSH`      | Manage SSH Keys    | `TRUE` |
+| `PLUGIN_SYSTEMS`  | Systems Management | `TRUE` |
+
+* * *
 
 ## Maintenance
 
 ### Shell Access
 
-For debugging and maintenance purposes you may want access the containers shell.
+For debugging and maintenance, `bash` and `sh` are available in the container.
 
-``bash
-docker exec -it (whatever your container name is) bash
-``
-## Support
+## Support & Maintenance
 
-These images were built to serve a specific need in a production environment and gradually have had more functionality added based on requests from the community.
-### Usage
-- The [Discussions board](../../discussions) is a great place for working with the community on tips and tricks of using this image.
-- [Sponsor me](https://tiredofit.ca/sponsor) for personalized support
-### Bugfixes
-- Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
-
-### Feature Requests
-- Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
-- [Sponsor me](https://tiredofit.ca/sponsor) regarding development of features.
-
-### Updates
-- Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
-- [Sponsor me](https://tiredofit.ca/sponsor) for up to date releases.
-
-## License
-MIT. See [LICENSE](LICENSE) for more details.
+- For community help, tips, and community discussions, visit the [Discussions board](/discussions).
+- For personalized support or a support agreement, see [Nfrastack Support](https://nfrastack.com/).
+- To report bugs, submit a [Bug Report](issues/new). Usage questions will be closed as not-a-bug.
+- Feature requests are welcome, but not guaranteed. For prioritized development, consider a support agreement.
+- Updates are best-effort, with priority given to active production use and support agreements.
 
 ## References
 
 * https://fusiondirectory.org
 * https://openldap.org
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

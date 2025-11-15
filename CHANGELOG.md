@@ -1,3 +1,13 @@
+## 2.6-1.5-8.0.0 2025-11-13 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Switch to nfrastack/openldap base image
+      - FusionDirectory Schemas 1.5
+      - FusionDirectory Plugin Schemas 1.5
+      - FusionDirectory Integrator Version 1.2
+      - FusionDirectory Tools 1.2
+      - PHP 7.4.33 (for above tool execution)
+
 ## 2.6-1.4-7.7.99 2025-11-09 <dave at tiredofit dot ca>
 
 Add EOL notice and deprecate image
@@ -337,7 +347,7 @@ Add EOL notice and deprecate image
    ### Added
       - Add support for Sinaps Plugin
       - Add Secrets Support
- 
+
    ### Changed
       - Fix AutoFS Plugin
       - Fix Nagios Plugin
@@ -382,7 +392,7 @@ Add EOL notice and deprecate image
 
 * Rebase from new tiredofit/openldap image based on Alpine
 * Added Individual Schema Application
-* Added Reapplication of Schemas 
+* Added Reapplication of Schemas
 
 ## 5.3 2018-06-12 <dave at tiredofit dot ca>
 
@@ -451,7 +461,7 @@ Add EOL notice and deprecate image
  - fusiondirectory-plugin-webservice-schema
 ## 1.0 2017-01-03 <dave at tiredofit dot ca>
 
-* Initial Build 
+* Initial Build
 * Fusion Directory 1.0.17
 * Fusion Directory Schema's Included
   -  fusiondirectory-schema

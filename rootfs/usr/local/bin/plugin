@@ -1,0 +1,23 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+
+FUSIONDIRECTORY_SCHEMA_PATH=${FUSIONDIRECTORY_SCHEMA_PATH:-"/etc/openldap/schema/fusiondirectory/"}
+FUSIONDIRECTORY_SCHEMA_CUSTOM_PATH=${FUSIONDIRECTORY_SCHEMA_CUSTOM_PATH:-"/custom/fusiondirectory/schema/"}
+
+echo "*** Core Plugin Schemas Available: '${FUSIONDIRECTORY_SCHEMA_PATH}'"
+ls ${FUSIONDIRECTORY_SCHEMA_PATH} | \
+                                    grep -v -- '-fd-conf.schema' | \
+                                    sed -E 's/-fd(-conf)?\.schema$|\.schema$//g' | \
+                                    tr '[:lower:]' '[:upper:]' | \
+                                    uniq
+
+echo "*** Custom Plugin Schemas Available: '${FUSIONDIRECTORY_SCHEMA_CUSTOM_PATH}'"
+ls ${FUSIONDIRECTORY_SCHEMA_CUSTOM_PATH} | \
+                                    grep -v -- '-fd-conf.schema' | \
+                                    sed -E 's/-fd(-conf)?\.schema$|\.schema$//g' | \
+                                    tr '[:lower:]' '[:upper:]' | \
+                                    uniq

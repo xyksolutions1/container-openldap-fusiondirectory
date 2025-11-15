@@ -1,0 +1,54 @@
+services:
+
+  openldap-fusiondirectory-app:
+    hostname: ldap.example.com
+    #image: docker.io/nfrastack/openldap-fusiondirectory:2.6-1.5
+    image: nfrastack/openldap-fusiondirectory
+    container_name: openldap-fusiondirectory-app
+    #ports:
+    #  - 389:389
+    #  - 636:636
+    volumes:
+      - ./data:/data
+      - ./certs:/certs
+    environment:
+      - TIMEZONE=America/Vancouver
+
+      - HOSTNAME=ldap.example.com
+      - DOMAIN=example.org
+      - BASE_DN=dc=example,dc=org
+      - ADMIN_PASS=admin
+      - CONFIG_PASS=config
+
+      - LOG_LEVEL=256
+
+      - ENABLE_TLS=TRUE
+      - TLS_CRT_FILENAME=cert.pem
+      - TLS_KEY_FILENAME=key.pem
+      - TLS_ENFORCE=FALSE
+
+      - ENABLE_BACKUP=TRUE
+      - BACKUP_INTERVAL=0400
+      - BACKUP_RETENTION=10080
+
+      - FUSIONDIRECTORY_ADMIN_USER=fd-admin
+      - FUSIONDIRECTORY_ADMIN_PASS=admin
+      - ORGANIZATION=Example Organization
+
+      - PLUGIN_AUDIT=TRUE
+      - PLUGIN_DSA=TRUE
+      - PLUGIN_LDAPDUMP=TRUE
+      - PLUGIN_LDAPMANAGER=TRUE
+      - PLUGIN_MAIL=TRUE
+      - PLUGIN_PERSONAL=TRUE
+      - PLUGIN_PPOLICY=TRUE
+      - PLUGIN_SSH=TRUE
+      - PLUGIN_SUDO=TRUE
+      - PLUGIN_WEBSERVICE=TRUE
+    networks:
+      - services
+    restart: always
+
+networks:
+  services:
+    external: true

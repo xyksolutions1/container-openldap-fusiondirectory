@@ -1,0 +1,42 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service 10-openldap
+
+if [ -z "${BASE_DN}" ]; then
+    IFS='.' read -ra BASE_DN_TABLE <<<"${DOMAIN}"
+    for i in "${BASE_DN_TABLE[@]}"; do
+        EXT="dc=${i},"
+        BASE_DN=${BASE_DN}${EXT}
+    done
+
+    BASE_DN=${BASE_DN::-1}
+fi
+
+IFS='.' read -a domain_elems <<<"${DOMAIN}"
+SUFFIX=""
+
+for elem in "${domain_elems[@]}"; do
+    if [ "x${SUFFIX}" = x ]; then
+        SUFFIX="dc=${elem}"
+        BASE_DN="${SUFFIX}"
+    else
+        BASE_DN="${BASE_DN},dc=${elem}"
+    fi
+done
+
+transform_var file "ADMIN_PASS"
+
+print_notice "Fixing ppolicy defaults"
+sed -i \
+            -e "s|{{BASE_DN}}|${BASE_DN}|g" \
+        /container/data/openldap/config/ppolicy/01-ppolicy-config.ldif \
+        /container/data/openldap/config/ppolicy/02-ppolicy-ou.ldif \
+        /container/data/openldap/config/ppolicy/03-ppolicy-default.ldif
+
+ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /container/data/openldap/config/ppolicy/01-ppolicy-config.ldif
+ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /container/data/openldap/config/ppolicy/02-ppolicy-ou.ldif
+ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /container/data/openldap/config/ppolicy/03-ppolicy-default.ldif
