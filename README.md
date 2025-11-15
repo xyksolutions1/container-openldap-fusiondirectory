@@ -38,28 +38,24 @@ To unlock advanced features, one must provide a code to be able to change specif
 To get access to the image use your container orchestrator to pull from the following locations:
 
 ```
-ghcr.io/nfrastack/container-openldap-fusiondirectory:(image_tag)
-docker.io/nfrastack/openldap-fusiondirectory:(image_tag)
+ghcr.io/nfrastack/container-openldap-fusiondirectory:<branch>-(image_tag)
+docker.io/nfrastack/openldap-fusiondirectory:<branch>-(image_tag)
 ```
 
 Image tag syntax is:
 
-`<image>:<optional tag>-<optional_distribution>_<optional_distribution_variant>`
+`<image>:<optional tag>`
 
 Example:
 
-`ghcr.io/nfrastack/container-openldap-fusiondirectory:latest` or
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:2.6-1.5-latest` or
 
-`ghcr.io/nfrastack/container-openldap-fusiondirectory:1.0` or optionally
+`ghcr.io/nfrastack/container-openldap-fusiondirectory:2.6-1.5-1.0` or
 
-`ghcr.io/nfrastack/container-openldap-fusiondirectory:1.0-alpine` or optinally
-
-`ghcr.io/nfrastack/container-openldap-fusiondirectory:alpine`
-
-- `latest` will be the most recent commit
-- An optional `tag` may exist that matches the [CHANGELOG](CHANGELOG.md) - These are the safest
-- If it is built for multiple distributions there may exist a value of `alpine` or `debian`
-- If there are multiple distribution variations it may include a version - see the registry for availability
+* `latest` will be the most recent commit
+* Branch refers to the git branch you are working with and relates to the openldap-fusiondirectory main versiion.
+* An otpional `tag` may exist that matches the [CHANGELOG](CHANGELOG.md) - These are the safest.
+* If there are multiple distribution variations it may include a version - see the registry for availability.
 
 Have a look at the container registries and see what tags are available.
 
@@ -78,9 +74,9 @@ Images are built for `amd64` by default, with optional support for `arm64` and o
 
 See the upstream [OpenLDAP Image](https://github.com/nfrastack/container-openldap) for this information.
 
-| Directory | Description |
-| --------- | ----------- |
-
+| Directory               | Description                  |
+| ----------------------- | ---------------------------- |
+| /custom/fusiondirectory | Optional Custom schema files |
 ### Environment Variables
 
 #### Base Images used
