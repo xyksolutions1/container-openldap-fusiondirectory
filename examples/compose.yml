@@ -2,8 +2,7 @@ services:
 
   openldap-fusiondirectory-app:
     hostname: ldap.example.com
-    #image: docker.io/nfrastack/openldap-fusiondirectory:2.6-1.5
-    image: nfrastack/openldap-fusiondirectory
+    image: docker.io/nfrastack/openldap-fusiondirectory:2.6-1.5
     container_name: openldap-fusiondirectory-app
     #ports:
     #  - 389:389
@@ -11,6 +10,7 @@ services:
     volumes:
       - ./data:/data
       - ./certs:/certs
+      - ./logs:/logs
     environment:
       - TIMEZONE=America/Vancouver
 
