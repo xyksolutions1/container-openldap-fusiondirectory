@@ -120,14 +120,11 @@ RUN echo "" && \
     container_build_log add "FusionDirectory Seafile Plugin Schema" "main" "https://github.com/gallak/fusiondirectory-plugins-seafile" && \
     mkdir -p /etc/openldap/schema/fusiondirectory && \
     rm -rf /usr/src/fusiondirectory/contrib/openldap/rfc2307bis.schema && \
-    #cp "${GIT_REPO_SRC_FUSIONDIRECTORY%/}"/contrib/bin/fusiondirectory-insert-schema /usr/local/bin && \
     cp -R \
                 "${GIT_REPO_SRC_FUSIONDIRECTORY%/}"/contrib/openldap/*.schema \
                 "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/*/contrib/openldap/*.schema \
             /etc/openldap/schema/fusiondirectory && \
     \
-    #sed -i -e "s|/etc/ldap/schema|/etc/openldap/schema|g" /usr/local/bin/fusiondirectory-insert-schema && \
-    #chmod +x /usr/local/bin/fusiondirectory-insert-schema && \
     package remove \
                     OPENLDAP_FUSIONDIRECTORY_BUILD_DEPS \
                     PHP_BUILD_DEPS \
