@@ -26,6 +26,8 @@ ARG \
     FUSIONDIRECTORY_REPO_URL="https://github.com/fusiondirectory/fusiondirectory" \
     FUSIONDIRECTORY_INTEGRATOR_REPO_URL="https://github.com/fusiondirectory/fusiondirectory-integrator" \
     FUSIONDIRECTORY_INTEGRATOR_VERSION="1.2" \
+    FUSIONDIRECTORY_ORCHESTRATOR_REPO_URL="https://github.com/fusiondirectory/fusiondirectory-orchestrator" \
+    FUSIONDIRECTORY_ORCHESTRATOR_VERSION="1.1" \
     FUSIONDIRECTORY_PLUGINS_VERSION="fusiondirectory-1.5" \
     FUSIONDIRECTORY_PLUGINS_REPO_URL="https://github.com/fusiondirectory/fusiondirectory-plugins" \
     FUSIONDIRECTORY_TOOLS_VERSION="1.2" \
@@ -118,6 +120,10 @@ RUN echo "" && \
     mkdir -p "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/seafile && \
     cp -R /usr/src/fusiondirectory-plugins-seafile/* "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/seafile/ && \
     container_build_log add "FusionDirectory Seafile Plugin Schema" "main" "https://github.com/gallak/fusiondirectory-plugins-seafile" && \
+    clone_git_repo "${FUSIONDIRECTORY_ORCHESTRATOR_REPO_URL}" "${FUSIONDIRECTORY_ORCHESTRATOR_VERSION}" /usr/src/fusiondirectory-orchestrator && \
+    mkdir -p "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/orchestrator/contrib/openldap && \
+    cp -aR /usr/src/fusiondirectory-orchestrator/contrib/openldap/fusiondirectory-orchestrator.schema "${GIT_REPO_SRC_FUSIONDIRECTORY_PLUGINS%/}"/orchestrator/contrib/openldap/orchestrator.schema && \
+    container_build_log add "FusionDirectory Orchestrator Schema" "${FUSIONDIRECTORY_ORCHESTRATOR_VERSION}" "${FUSIONDIRECTORY_ORCHESTRATOR_REPO_URL}" && \
     mkdir -p /etc/openldap/schema/fusiondirectory && \
     rm -rf /usr/src/fusiondirectory/contrib/openldap/rfc2307bis.schema && \
     cp -R \
