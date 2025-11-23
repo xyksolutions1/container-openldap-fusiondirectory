@@ -354,7 +354,6 @@ changeType: add
 objectClass: organizationalUnit
 ou: snapshots
 EOF
-####fusionConfigMd5: 5e1bbd00c5089366181de6f81d514409
 
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /tmp/02-fusiondirectory-add.ldif
 
@@ -367,8 +366,6 @@ EOF
     silent ldapadd -Y EXTERNAL -Q -H ldapi:/// -f /container/data/openldap/config/ppolicy/01-ppolicy-config.ldif
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /container/data/openldap/config/ppolicy/02-ppolicy-ou.ldif
     silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /container/data/openldap/config/ppolicy/03-ppolicy-default.ldif
-    ###
-    #rm -rf /tmp/*.ldif
 fi
 
 # Dynamically discover enabled plugins from environment
