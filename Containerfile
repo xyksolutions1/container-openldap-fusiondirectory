@@ -21,6 +21,7 @@ COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
 COPY README.md /usr/src/container/README.md
 
+
 ARG \
     FUSIONDIRECTORY_VERSION="fusiondirectory-1.5" \
     FUSIONDIRECTORY_REPO_URL="https://github.com/fusiondirectory/fusiondirectory" \
