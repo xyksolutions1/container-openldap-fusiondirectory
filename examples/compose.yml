@@ -23,8 +23,8 @@ services:
       - LOG_LEVEL=256
 
       - ENABLE_TLS=TRUE
-      - TLS_CRT_FILENAME=cert.pem
-      - TLS_KEY_FILENAME=key.pem
+      - TLS_CERT_FILE=cert.pem
+      - TLS_KEY_FILE=key.pem
       - TLS_ENFORCE=FALSE
 
       - ENABLE_BACKUP=TRUE
