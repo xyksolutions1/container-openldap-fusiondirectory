@@ -163,8 +163,8 @@ if [ ! -e "${FUSIONDIRECTORY_INSTALLED}" ]; then
     UID_FD_ADMIN_BS64="$(echo -n "${UID_FD_ADMIN}" | base64 | tr -d '\n')"
     echo "$(TZ=$TIMEZONE date +'%Y-%m-%d %H:%M:%S %Z') | Fusion Directory Schema Version $(grep -o "ADD: FusionDirectory Schemas .* |" /container/build/${IMAGE_NAME/\//_}/build.log | awk '{print $4}')" | silent tee -a "${FUSIONDIRECTORY_INSTALLED}"
     schema_apply core:force ldapns:force template:force
-
-    cat <<EOF | silent tee /tmp/01-fusiondirectory-base.ldif
+    stage1=$(mktemp)
+    cat <<EOF | silent tee ${stage1}
 dn: ${BASE_DN}
 changeType: add
 o: ${ORGANIZATION}
@@ -187,14 +187,15 @@ description: LDAP administrator
 userPassword: ${ADMIN_PASS_ENCRYPTED}
 EOF
 
-    silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /tmp/01-fusiondirectory-base.ldif
+    silent ldapmodify -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f ${stage1}
     if var_true "${ENABLE_READONLY_USER}"; then
         print_notice "Adding read only (DSA) user"
         ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /container/data/openldap/config/bootstrap/ldif/readonly-user/readonly-user.ldif
         ldapmodify -H 'ldapi:///' -f /container/data/openldap/config/bootstrap/ldif/readonly-user/readonly-user-acl.ldif
     fi
 
-    cat <<EOF | silent tee /tmp/02-fusiondirectory-add.ldif
+    stage2=$(mktemp)
+    cat <<EOF | silent tee ${stage2}
 dn: uid=${FUSIONDIRECTORY_ADMIN_USER},${BASE_DN}
 changeType: add
 objectClass: inetOrgPerson
@@ -355,7 +356,7 @@ objectClass: organizationalUnit
 ou: snapshots
 EOF
 
-    silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f /tmp/02-fusiondirectory-add.ldif
+    silent ldapadd -H 'ldapi:///' -D "cn=admin,${BASE_DN}" -w "${ADMIN_PASS}" -f ${stage2}
 
     print_notice "Adding ppolicy defaults"
     sed -i "s|{{BASE_DN}}|${BASE_DN}|g" \
