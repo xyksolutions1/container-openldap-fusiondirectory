@@ -21,6 +21,7 @@ services:
       - CONFIG_PASS=config
 
       - LOG_LEVEL=256
+      - LOG_TYPE=FILE
 
       - ENABLE_TLS=TRUE
       - TLS_CERT_FILE=cert.pem
