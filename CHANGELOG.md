@@ -1,3 +1,9 @@
+## 2.6-1.5-8.0.2 2026-03-10 <code at nfastack dot com>
+
+   ### Added
+      - Bump to nfrastack/openldap:2.6-8.0.2
+
+
 ## 2.6-1.5-8.0.0 2025-11-13 <dave at tiredofit dot ca>
 
    ### Changed
