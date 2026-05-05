@@ -5,16 +5,16 @@
 ARG \
     BASE_IMAGE
 
-FROM ${BASE_IMAGE}
+FROM docker.io/xyksolutions1/container-openldap:2.6
 
 LABEL \
         org.opencontainers.image.title="OpenLDAP w/FusionDirectory" \
         org.opencontainers.image.description="Directory server with FusionDirectory schemas" \
-        org.opencontainers.image.url="https://hub.docker.com/r/nfrastack/openldap-fusiondirectory" \
-        org.opencontainers.image.documentation="https://github.com/nfrastack/container-openldap-fusiondirectory/blob/main/README.md" \
-        org.opencontainers.image.source="https://github.com/nfrastack/container-openldap-fusiondirectory.git" \
-        org.opencontainers.image.authors="Nfrastack <code@nfrastack.com>" \
-        org.opencontainers.image.vendor="Nfrastack <https://www.nfrastack.com>" \
+        org.opencontainers.image.url="https://hub.docker.com/r/xyksolutions1/openldap-fusiondirectory" \
+        org.opencontainers.image.documentation="https://github.com/xyksolutions1/container-openldap-fusiondirectory/blob/main/README.md" \
+        org.opencontainers.image.source="https://github.com/xyksolutions1/container-openldap-fusiondirectory.git" \
+        org.opencontainers.image.authors="xyksolutions1" \
+        org.opencontainers.image.vendor="xyksolutions1" \
         org.opencontainers.image.licenses="MIT"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
@@ -36,8 +36,8 @@ ARG \
     PHP_REPO_URL="https://github.com/php/php-src"
 
 ENV \
-    IMAGE_NAME="nfrastack/openldap-fusiondirectory" \
-    IMAGE_REPO_URL="https://github.com/nfrastack/container-openldap-fusiondirectory/"
+    IMAGE_NAME="xyksolutions1/openldap-fusiondirectory" \
+    IMAGE_REPO_URL="https://github.com/xyksolutions1/container-openldap-fusiondirectory/"
 
 RUN echo "" && \
     OPENLDAP_FUSIONDIRECTORY_BUILD_DEPS_ALPINE=" \
