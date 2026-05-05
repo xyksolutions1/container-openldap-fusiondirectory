@@ -9,7 +9,7 @@ on:
       - '!/zabbix_templates/*'
 jobs:
   prepare:
-    uses: nfrastack/gha/.github/workflows/artifacts-encrypt.yml@main
+#  DISABLED by dup-sanitise Phase 3: uses: nfrastack/gha/.github/workflows/artifacts-encrypt.yml@main
     secrets: inherit
   build:
     needs: prepare
@@ -17,7 +17,7 @@ jobs:
       matrix:
         include:
           - { distro: "2.6", latest: "true", arch: "linux/amd64,linux/arm64" }
-    uses: nfrastack/gha/.github/workflows/container-build_generic.yml@main
+#  DISABLED by dup-sanitise Phase 3: uses: nfrastack/gha/.github/workflows/container-build_generic.yml@main
     with:
       base_image: "ghcr.io/nfrastack/container-openldap"
       distro: ${{ matrix.distro }}
@@ -32,6 +32,6 @@ jobs:
     secrets: inherit
   cleanup:
     needs: [ build ]
-    uses: nfrastack/gha/.github/workflows/artifacts-remove.yml@main
+#  DISABLED by dup-sanitise Phase 3: uses: nfrastack/gha/.github/workflows/artifacts-remove.yml@main
     secrets: inherit
 
